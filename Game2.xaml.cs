@@ -76,6 +76,7 @@ namespace LibraryTrainer
         {
             PopulateQList();
             lbxQList.Visibility = Visibility.Visible;
+            btnEnd.IsEnabled = true;
         }
 
         private void PopulateQList()
@@ -207,30 +208,56 @@ namespace LibraryTrainer
 
         private void btnEnd_Click(object sender, RoutedEventArgs e)
         {
+            int score = 0;
             if (GameMode == 0)
             {
-                CalcScoreZero();
+                score = CalcScoreZero();
             } else
             {
-                CalcScoreOne();
+                score = CalcScoreOne();
             }
+
+            score = score * 25;
+            lblScore.Content = "Score:  " + score.ToString();
         }
 
-        private void CalcScoreOne()
+        private int CalcScoreZero()
         {
+            
             int ScoreCount = 0;
-            foreach (var item in _UserDic.Keys)
+
+            for(int i = 0; i < _UserDic.Count; i++)
             {
-                if (item.Equals(_AList.Contains(item.ToString())))
+                int key = _UserDic.ElementAt(i).Key;
+                int ans = Int32.Parse(_AList.ElementAt(i));
+
+                if (key == ans)
                 {
                     ScoreCount++;
                 }
             }
+
+        
+            
+
+            return ScoreCount;
         }
 
-        private void CalcScoreZero()
+        private int CalcScoreOne()
         {
-            
+            int ScoreCount = 0;
+
+            for (int i = 0; i < _UserDic.Count; i++)
+            {
+                string key = _UserDic.ElementAt(i).Value;
+
+                if (key.Equals(_AList.ElementAt(i)))
+                {
+                    ScoreCount++;
+                }
+            }
+
+            return ScoreCount;
         }
 
         public static int GetRandomNumber(int min, int max)
