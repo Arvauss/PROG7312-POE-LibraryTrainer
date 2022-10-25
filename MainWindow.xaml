@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LibraryTrainer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="LIBRARY TRAINING SOFTWARE" Height="550" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
             <Label Content="LIBRARY TRAINING SOFTWARE" HorizontalAlignment="Center" VerticalAlignment="Top"  Background="#FFF9D7F2" FontSize="40" FontFamily="Ebrima" FontWeight="Normal" FontStyle="Normal" Width="800" HorizontalContentAlignment="Center" MouseLeftButtonDown="title_Click"  />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace LibraryTrainer
     public partial class Game2 : Page
     {
         private int GameMode = 0;
+
+        public static int ConcScoreG2 = 0;
 
         public static Random random = new Random();
         Dictionary<int, string> _LibraryDic = new Dictionary<int, string>();
@@ -54,25 +57,32 @@ namespace LibraryTrainer
             lbxAList.ItemContainerStyle = style;
 
             btnEnd.IsEnabled = false;
+        
+            
         }
 
         private void PopulateLibDic()
         {
             _LibraryDic.Clear();
-            _LibraryDic.Add(1, "Desription 1");
-            _LibraryDic.Add(100, "Desription 100");
-            _LibraryDic.Add(200, "Desription 200");
-            _LibraryDic.Add(300, "Desription 300");
-            _LibraryDic.Add(400, "Desription 400");
-            _LibraryDic.Add(500, "Desription 500");
-            _LibraryDic.Add(600, "Desription 600");
-            _LibraryDic.Add(700, "Desription 700");
-            _LibraryDic.Add(800, "Desription 800");
-            _LibraryDic.Add(900, "Desription 900");
-            _LibraryDic.Add(999, "Desription 999");
+            _LibraryDic.Add(000, "GENERAL KNOWLEDGE");
+            _LibraryDic.Add(100, "PHILOSOPHY & PSYCHOLOGY");
+            _LibraryDic.Add(200, "RELIGION");
+            _LibraryDic.Add(300, "SOCIAL SCIENCES");
+            _LibraryDic.Add(400, "LANGUAGES");
+            _LibraryDic.Add(500, "SCIENCE");
+            _LibraryDic.Add(600, "TECHNOLOGY");
+            _LibraryDic.Add(700, "ARTS & RECREATION");
+            _LibraryDic.Add(800, "LITERATURE");
+            _LibraryDic.Add(900, "HISTORY & GEOGRAPHY");
+            Debug.WriteLine("dic added");
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            Start();
+        }
+
+        private void Start()
         {
             PopulateQList();
             lbxQList.Visibility = Visibility.Visible;
@@ -209,6 +219,7 @@ namespace LibraryTrainer
         private void btnEnd_Click(object sender, RoutedEventArgs e)
         {
             int score = 0;
+            int score2 = 0;
             if (GameMode == 0)
             {
                 score = CalcScoreZero();
@@ -217,13 +228,20 @@ namespace LibraryTrainer
                 score = CalcScoreOne();
             }
 
-            score = score * 25;
-            lblScore.Content = "Score:  " + score.ToString();
+            
+
+            score2 = score * 25;
+            ConcScoreG2 += score2;
+            lblScore.Content = "Score:  " + score2.ToString();
+            lblConcScore.Content = "Concurrent Score:  " + ConcScoreG2.ToString();
+
+            MessageBox.Show($"You got {score} items correct!\nYou have gained {score2} points!");
+            Start();
         }
 
         private int CalcScoreZero()
         {
-            
+           
             int ScoreCount = 0;
 
             for(int i = 0; i < _UserDic.Count; i++)
@@ -236,10 +254,6 @@ namespace LibraryTrainer
                     ScoreCount++;
                 }
             }
-
-        
-            
-
             return ScoreCount;
         }
 
@@ -251,12 +265,11 @@ namespace LibraryTrainer
             {
                 string key = _UserDic.ElementAt(i).Value;
 
-                if (key.Equals(_AList.ElementAt(i)))
+                if (key.Equals(_AList.ElementAt(i))) 
                 {
                     ScoreCount++;
                 }
             }
-
             return ScoreCount;
         }
 
