@@ -12,7 +12,7 @@
     <Grid>
         <Button x:Name="btnGame1"  Content ="Game 1: Replacing Books" Click="btnGame1_Click" Margin="0,132,315,0"  Width="170" MinHeight="40" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
         <Button x:Name="btnGame2"  Content="Game 2: Identifying Areas"   Height="50" Width="170" MinHeight="40" IsEnabled="True" Margin="0,225,315,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="btnGame2_Click" />
-        <Button x:Name="btnGame3"  Margin="0,313,315,0" Content="Game 3: Finding Call Numbers"  Height="50" Width="170" MinHeight="40" IsEnabled="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <Button x:Name="btnGame3"  Margin="0,313,315,0" Content="Game 3: Finding Call Numbers"  Height="50" Width="170" MinHeight="40"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="btnGame3_Click" />
 
     </Grid>
 </Page>

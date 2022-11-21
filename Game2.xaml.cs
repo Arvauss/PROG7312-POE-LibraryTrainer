@@ -36,8 +36,10 @@ namespace LibraryTrainer
         {
             InitializeComponent();
 
+            //populates library dictionary on startup
             PopulateLibDic();
 
+            //assigns Column listboxes to item sources, by default left column will display all top level call numbers and their descriptions
             lbxQList.ItemsSource = _UserDic.Keys;
             lbxQList.ItemsSource = _LibraryDic;
             lbxAList.ItemsSource = _AList;
@@ -56,11 +58,13 @@ namespace LibraryTrainer
                         new DragEventHandler(ListBoxItem_Drop)));
             lbxAList.ItemContainerStyle = style;
 
+            //disables end button on startup
             btnEnd.IsEnabled = false;
         
             
         }
 
+        //Populates Library System
         private void PopulateLibDic()
         {
             _LibraryDic.Clear();
@@ -79,16 +83,19 @@ namespace LibraryTrainer
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
+            lbxQList.Visibility = Visibility.Visible;
+            btnEnd.IsEnabled = true;
             Start();
         }
 
+        //Basic method to restart the game
         private void Start()
         {
             PopulateQList();
-            lbxQList.Visibility = Visibility.Visible;
-            btnEnd.IsEnabled = true;
+            
         }
 
+        //Checks the current game mode, calls methods to generate questions accordingly
         private void PopulateQList()
         {
             if (GameMode == 0)
@@ -102,6 +109,7 @@ namespace LibraryTrainer
             }
         }
 
+        //Populates a list of questions and answers where descriptions are the questions in Column A and answers are call numbers in Column B
         private void CreateQAListsOne()
         {
             lbxAList.ItemsSource = null;
@@ -159,6 +167,7 @@ namespace LibraryTrainer
             lbxQList.ItemsSource = _UserDic.Values;
         }
 
+        //Populates a list of questions and answers where call numbers are the questions in Column A and answers are descriptions in Column B
         private void CreateQAListsZero()
         {
             lbxAList.ItemsSource = null;
@@ -216,6 +225,7 @@ namespace LibraryTrainer
             lbxQList.ItemsSource = _UserDic.Keys;
         }
 
+        //calls methods to calculate score based on game mode, displays scores to the user, then restarts the game
         private void btnEnd_Click(object sender, RoutedEventArgs e)
         {
             int score = 0;
@@ -238,7 +248,7 @@ namespace LibraryTrainer
             MessageBox.Show($"You got {score} items correct!\nYou have gained {score2} points!");
             Start();
         }
-
+        //calculates score by checking if the user input matches the question's answers - if the answers are call numbers
         private int CalcScoreZero()
         {
            
@@ -256,7 +266,7 @@ namespace LibraryTrainer
             }
             return ScoreCount;
         }
-
+        //calculates score by checking if the user input matches the question's answers - if the answers are descriptions
         private int CalcScoreOne()
         {
             int ScoreCount = 0;
@@ -273,6 +283,7 @@ namespace LibraryTrainer
             return ScoreCount;
         }
 
+        //generic method to get randomised number within specified parameters
         public static int GetRandomNumber(int min, int max)
         {
             // (Microsoft, 2022)
@@ -282,7 +293,8 @@ namespace LibraryTrainer
 
 
         /// <summary>
-        /// ---------------------------- ListBox Styles
+        /// ---------------------------- ListBox Styles, used to make Column B listbox draggable
+        /// https://stackoverflow.com/questions/3350187/wpf-c-rearrange-items-in-listbox-via-drag-and-drop
         /// </summary>
         //ListBox events setup (Wiesław S, 2015)
         private void ListBox_PreviewMouseMove(object sender, MouseEventArgs e)

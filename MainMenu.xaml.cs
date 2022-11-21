@@ -46,5 +46,11 @@ namespace LibraryTrainer
             Game2 game2 = new Game2();
             NavigationService.Navigate(game2);
         }
+
+        private void btnGame3_Click(object sender, RoutedEventArgs e)
+        {
+            Game3 game3 = new Game3();
+            NavigationService.Navigate(game3);
+        }
     }
 }
