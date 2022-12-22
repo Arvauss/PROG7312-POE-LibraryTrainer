@@ -13,12 +13,11 @@
         <Label x:Name="lblQheader" Content="Your Dewey description is:" HorizontalAlignment="Left" Margin="75,76,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnEnd" HorizontalAlignment="Center" VerticalAlignment="Top" MinHeight="40" MinWidth="100" Margin="0,390,0,0" Click="btnEnd_Click" >Finish Round</Button>
         <Label x:Name="lblScore" Content="Your Score:" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="Auto"/>
-        <Label x:Name="lblConcScore" Content="Your Concurrent Score:" HorizontalAlignment="Center" Margin="0,360,0,0" VerticalAlignment="Top" Width="Auto"/>
-        <Label x:Name="lblQ" Content="adsfdasf" FontSize="18" HorizontalAlignment="Left" Margin="75,107,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="rbOne" Content="RadioButton" HorizontalAlignment="Left" Margin="471,134,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="rbTwo" Content="RadioButton" HorizontalAlignment="Left" Margin="471,162,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="rbThr" Content="RadioButton" HorizontalAlignment="Left" Margin="471,190,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="rbFou" Content="RadioButton" HorizontalAlignment="Left" Margin="471,0,0,0" VerticalAlignment="Center"/>
+        <Label x:Name="lblQ" Content="&#xD;&#xA;" FontSize="18" HorizontalAlignment="Left" Margin="75,107,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="rbOne" GroupName="RGroup" Content="RadioButton" HorizontalAlignment="Left" Margin="471,134,0,0" VerticalAlignment="Top" Checked="rbOne_Checked"/>
+        <RadioButton x:Name="rbTwo" GroupName="RGroup" Content="RadioButton" HorizontalAlignment="Left" Margin="471,162,0,0" VerticalAlignment="Top" Checked="rbTwo_Checked"/>
+        <RadioButton x:Name="rbThr" GroupName="RGroup" Content="RadioButton" HorizontalAlignment="Left" Margin="471,190,0,0" VerticalAlignment="Top" Checked="rbThr_Checked"/>
+        <RadioButton x:Name="rbFou" GroupName="RGroup" Content="RadioButton" HorizontalAlignment="Left" Margin="471,0,0,0" VerticalAlignment="Center" Checked="rbFou_Checked"/>
         <Label x:Name="lblQheader_Copy" Content="Which of these Dewey System options does your&#xD;&#xA;description belong to?" HorizontalAlignment="Left" Margin="471,76,0,0" VerticalAlignment="Top"/>
 
 

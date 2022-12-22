@@ -14,7 +14,7 @@
         <ListBox x:Name="lbxSystemList" Width="260" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10,2"/>
         <Button x:Name="btnEnd" HorizontalAlignment="Center" VerticalAlignment="Top" MinHeight="40" MinWidth="100" Margin="0,365,0,0" Click="btnEnd_Click" >End</Button>
         <Label x:Name="lblScore" Content="Your Score:" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="Auto"/>
-        <Label x:Name="lblheader" Content="Arrange the Call Numbers in Ascending Order:" HorizontalAlignment="Left" Margin="270,76,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblheader" Content="Arrange the Call Numbers in Ascending Order &#xD;&#xA;by dragging the list items into their correct order:" HorizontalAlignment="Left" Margin="270,63,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblHighScore" Content="High Score: 0" HorizontalAlignment="Left" Margin="596,22,0,0" VerticalAlignment="Top" FontSize="16" FontFamily="Ebrima"/>
     </Grid>
 </Page>

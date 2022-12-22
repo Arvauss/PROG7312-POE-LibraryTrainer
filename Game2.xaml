@@ -12,7 +12,7 @@
         <Button x:Name="btnStart" HorizontalAlignment="Center" VerticalAlignment="Top" MinHeight="40" MinWidth="100" Margin="0,18,0,0" Click="btnStart_Click">New Game</Button>
         <Label x:Name="lblQheader" Content="Column A: Questions" HorizontalAlignment="Left" Margin="75,76,0,0" VerticalAlignment="Top"/>
         <ListBox x:Name="lbxQList" Width="260" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10,2" Margin="75,0,0,0"/>
-        <Label x:Name="lblAheader" Content="Column B: Answers, Match the TOP 4 Items with the Questions in Column A" HorizontalAlignment="Right" Margin="0,76,75,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblAheader" Content="Column B: Answers, Match the TOP 4 Items with the Questions in Column A&#xD;&#xA;by drag &amp; dropping list items into your desired positions." HorizontalAlignment="Right" Margin="0,76,75,0" VerticalAlignment="Top"/>
         <ListBox x:Name="lbxAList" Width="260" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="10,2" Margin="0,0,75,0"/>
         <Button x:Name="btnEnd" HorizontalAlignment="Center" VerticalAlignment="Top" MinHeight="40" MinWidth="100" Margin="0,390,0,0" Click="btnEnd_Click" >Finish Round</Button>
         <Label x:Name="lblScore" Content="Your Score:" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="Auto"/>

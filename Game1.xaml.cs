@@ -74,7 +74,7 @@ namespace LibraryTrainer
             {
                 double callNum = GetRandomNumber(1000, 0);
                 _BookList.Add(callNum);
-                _UserList.Add(callNum.ToString());
+                _UserList.Add(callNum.ToString() + " " + RandomString());
             }
         }
         //ListBox events setup (Wiesław S, 2015)
@@ -173,7 +173,8 @@ namespace LibraryTrainer
             _FinalList.Clear();
             foreach (string s in _UserList)
             {
-                _FinalList.Add(Double.Parse(s));
+                string[] objs = s.Split(' ');
+                _FinalList.Add(Double.Parse(objs[0]));
             }
 
             //calls method to compare lists and calculate score
@@ -244,8 +245,15 @@ namespace LibraryTrainer
             return list;
         }
 
-
+        // random string generator (dtb, 2009) https://stackoverflow.com/a/1344242
+        public static string RandomString()
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRST";
+            return new string(Enumerable.Repeat(chars, 3).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
     }
+    
+   
     
 }
 

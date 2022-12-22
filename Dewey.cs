@@ -24,5 +24,22 @@ namespace LibraryTrainer
             string re = $"{this.callNum} {this.callDesc}";
             return re;
         }
+
+        protected bool Equals(Dewey obj)
+        {
+            return callDesc == obj.callDesc;
+        }
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals (this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Dewey)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace LibraryTrainer
     /// </summary>
     public partial class Game3 : Page
     {
+        static int score = 0;
         public static Random random = new Random();
         static TreeNode<Dewey> root = new TreeNode<Dewey>(new Dewey("root", "root"));
 
@@ -28,6 +29,8 @@ namespace LibraryTrainer
 
         static List<Dewey> QA = new List<Dewey>();
         static List<int> QAindexes = new List<int>();
+
+        public static int selectedItem;
 
         public Game3()
         {
@@ -38,27 +41,103 @@ namespace LibraryTrainer
             rbThr.Visibility = Visibility.Hidden;
             rbFou.Visibility = Visibility.Hidden;
 
+            //initialises tree from file data
             InitTree();
-            MessageBox.Show("Tree initialised");
+
         }
 
+        //starts new round/game
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             btnEnd.IsEnabled = false;
 
+            // calculates and displays possible answers
             CalcQA();
             PopAnswers();
 
+            btnEnd.IsEnabled = true;
+
 
         }
 
+        //finishes round on button click
         private void btnEnd_Click(object sender, RoutedEventArgs e)
         {
+            if (rbOne.IsChecked == true || rbTwo.IsChecked == true || rbThr.IsChecked == true || rbFou.IsChecked == true)
+            {
+                CheckAnswer();
+            } else
+            {
+                MessageBox.Show("Please Select an Answer");
+            }
 
-            CalcQA();
             
         }
 
+        // Checks user answer
+        private void CheckAnswer()
+        {
+            if (GameMode == 0)
+            {
+                if (selectedItem == QAindexes[0])
+                {
+                    score += 10;
+                    MessageBox.Show("Correct Item Selected! Moving on to the next level. Select the correct 2nd level Dewey");
+                    GameMode = 1;
+                    lblScore.Content = "Concurrent score:  " + score;
+                    PopAnswers();
+                } else
+                {
+                    MessageBox.Show("Incorrect Item Selected! Press 'Ok' to start new game");
+                    GameMode = 0;
+                    score = 0;
+                    lblScore.Content = "Concurrent score:  " + score;
+                    NewRound();
+                }
+
+                
+            } else if (GameMode == 1)
+            {
+                if (selectedItem == QAindexes[0])
+                {
+                    score += 10;
+                    MessageBox.Show("Correct Item Selected! Moving on the final level. Select the correct call number");
+                    GameMode = 2;
+                    lblScore.Content = "Concurrent score:  " + score;
+                    PopAnswers();
+                }
+                else
+                {
+                    GameMode = 0;
+                    score = 0;
+                    MessageBox.Show("Incorrect Item Selected! Press 'Ok' to start new game");
+                    lblScore.Content = "Concurrent score:  " + score;
+                    NewRound();
+                }
+    
+            } else if (GameMode == 2)
+            {
+                if (selectedItem == QAindexes[0])
+                {
+                    score += 10;
+                    MessageBox.Show("Correct Item Selected! Game completed, starting with new description");
+                    GameMode = 0;
+                    lblScore.Content = "Concurrent score:  " + score;
+                    NewRound();
+                }
+                else
+                {
+                    GameMode = 0;
+                    score = 0;
+                    MessageBox.Show("Incorrect Item Selected! Press 'Ok' to start new game");
+                    lblScore.Content = "Concurrent score:  " + score;
+                    NewRound();
+                }
+            }
+
+        }
+
+        //determines the correct answer and question base for the game
         public void CalcQA()
         {
             QA.Clear();
@@ -78,15 +157,9 @@ namespace LibraryTrainer
 
             lblQ.Content = QA[2].callDesc;
 
-            /*string outp = "";
-            foreach (var item in QA)
-            {
-                outp += $"\n{item.callNum} {item.callDesc}";
-            }
-
-            MessageBox.Show(outp);*/
         }
 
+        // calculates possible answers based on the state of the game, and displays them in their respective radio buttons
         public void PopAnswers()
         {
             List<int> indexes = new List<int>();
@@ -113,11 +186,8 @@ namespace LibraryTrainer
                     else i--;
                 }
 
-                
-
                 ans = ans.OrderBy(x => x.callNum).ToList();
                 QAindexes[0] = ans.IndexOf(QA[0]);
-                MessageBox.Show(QAindexes[0].ToString());
 
                 rbOne.Content = ans[0].ToString();
                 rbTwo.Content = ans[1].ToString();
@@ -129,7 +199,100 @@ namespace LibraryTrainer
                 rbThr.Visibility = Visibility.Visible;
                 rbFou.Visibility = Visibility.Visible;
 
+            } else if (GameMode == 1)
+            {
+                List<string> temp = new List<string>();
+                List<TreeNode<Dewey>> sourceL2 = new List<TreeNode<Dewey>>();
+                List<Dewey> sources = new List<Dewey>();
+                ans.Add(QA[1]);
+                temp.Add(QA[1].callNum);
+                sourceL1 = root.Children;
+                foreach (var child in sourceL1)
+                {
+                    sourceL2.AddRange(child.Children.ToList());
+
+                }
+                foreach(var item in sourceL2)
+                {
+                    sources.Add(item.Value);
+                }
+
+                for (int i = 0; i < 3; i++)
+                {
+                    int index = GetRandomNumber(0, sources.Count());
+                    Dewey dewey = sources[index];
+
+                    if (temp.Contains(dewey.callNum))
+                    {
+                        i--;
+                    } else if (!ans.Contains(dewey))
+                    {
+                        ans.Add(dewey);
+                        temp.Add(dewey.callNum);
+                    }
+
+                }
+
+                ans = ans.OrderBy(x => x.callNum).ToList();
+
+                QAindexes[0] = ans.IndexOf(QA[1]);
+
+                rbOne.Content = ans[0].ToString();
+                rbTwo.Content = ans[1].ToString();
+                rbThr.Content = ans[2].ToString();
+                rbFou.Content = ans[3].ToString();
+
             }
+            else if (GameMode == 2)
+            {
+                List<string> temp = new List<string>();
+                ans.Add(QA[2]);
+                temp.Add(QA[2].callNum);
+                List<TreeNode<Dewey>> lvl1 = root.Children;
+                List<TreeNode<Dewey>> lvl2 = new List<TreeNode<Dewey>>();
+                List<TreeNode<Dewey>> lvl3 = new List<TreeNode<Dewey>>();
+                
+                foreach(var l1 in lvl1)
+                {
+                    lvl2.AddRange(l1.Children);
+                }
+                foreach(var l2 in lvl2)
+                {
+                    lvl3.AddRange(l2.Children);
+                }
+                for (int i = 0; i < 3;  i++)
+                {
+                    int index = GetRandomNumber(0, lvl3.Count());
+                    Dewey dewey = lvl3[index].Value;
+                    
+                    if (temp.Contains(dewey.callNum))
+                    {
+                        i--;
+                    } else if (!ans.Contains(dewey))
+                    {
+                        ans.Add(dewey);
+                        temp.Add(dewey.callNum);
+                    }
+  
+                    
+                }
+
+                ans = ans.OrderBy(x => x.callNum).ToList();
+
+                QAindexes[0] = ans.IndexOf(QA[2]);
+
+                rbOne.Content = ans[0].callNum.ToString();
+                rbTwo.Content = ans[1].callNum.ToString();
+                rbThr.Content = ans[2].callNum.ToString();
+                rbFou.Content = ans[3].callNum.ToString();
+            }
+        }
+
+        //basic initialisation call for new game
+        public void NewRound()
+        {
+            CalcQA();
+            PopAnswers();
         }
 
 
@@ -141,6 +304,7 @@ namespace LibraryTrainer
             return d;
         }
 
+        //Reads data from file to populate tree
         public void InitTree()
         {
             string dir = Environment.CurrentDirectory;
@@ -149,9 +313,6 @@ namespace LibraryTrainer
 
             List<String> tempL1 = new List<String>();
             List<String> tempL2 = new List<String>();
-
-            
-
 
             foreach (string line in sysLines)
             {
@@ -208,6 +369,7 @@ namespace LibraryTrainer
                 nodeLvl3 = nodeLvl2.AddChild(call3);
             }
         }
+        //method to split string into call number and call description, returns new Dewey object
         public static Dewey splitString(string line)
         {
             string[] div = line.Split("-");
@@ -215,6 +377,7 @@ namespace LibraryTrainer
             return new Dewey(div[0], div[1]);
         }
 
+        //method to find specific dewey object within a node
         public static TreeNode<Dewey> FindNode(TreeNode<Dewey> parent, Dewey search)
         {
             foreach (var node in parent.Children)
@@ -224,6 +387,28 @@ namespace LibraryTrainer
             }
 
             return null;
+        }
+
+
+        //basic radiobutton select activity
+        private void rbOne_Checked(object sender, RoutedEventArgs e)
+        {
+            selectedItem = 0;
+        }
+
+        private void rbTwo_Checked(object sender, RoutedEventArgs e)
+        {
+            selectedItem = 1;
+        }
+
+        private void rbThr_Checked(object sender, RoutedEventArgs e)
+        {
+            selectedItem = 2;
+        }
+
+        private void rbFou_Checked(object sender, RoutedEventArgs e)
+        {
+            selectedItem = 3;
         }
     }
 }
